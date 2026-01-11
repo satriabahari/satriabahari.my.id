@@ -74,7 +74,7 @@ const CodeBlock = ({
             {!isCopied ? (
               <CopyIcon size={18} className="text-neutral-400" />
             ) : (
-              <CheckIcon size={18} className="text-green-600" />
+              <CheckIcon size={18} className="text-primary" />
             )}
           </button>
 

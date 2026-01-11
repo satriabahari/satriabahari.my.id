@@ -62,8 +62,7 @@ const Calendar = ({ data }: CalendarProps) => {
       };
     }) ?? [];
 
-  const contributionColors = data?.colors ?? [];
-
+  const contributionColors = ["#ffffb8", "#ffff8a", "#ffff5c", "#fbe400"];
   return (
     <>
       <div className="relative flex flex-col">
@@ -83,8 +82,12 @@ const Calendar = ({ data }: CalendarProps) => {
           {weeks?.map((week) => (
             <div key={week.firstDay}>
               {week.contributionDays.map((contribution) => {
+                const colorIndex = data?.colors.indexOf(contribution.color);
+                const customColor =
+                  colorIndex !== -1 ? contributionColors[colorIndex!] : null;
+
                 const backgroundColor =
-                  contribution.contributionCount > 0 && contribution.color;
+                  contribution.contributionCount > 0 ? customColor : null;
 
                 const getRandomDelayAnimate =
                   Math.random() * week.contributionDays.length * 0.15;

@@ -11,11 +11,11 @@ const OverviewItem = ({ label, value, unit = "" }: OverviewItemProps) => (
   <Card className="flex flex-col self-center px-4 py-3">
     <span className="text-sm dark:text-neutral-400">{label}</span>
     {typeof value === "string" ? (
-      <span className="text-lg font-medium text-green-600">{value}</span>
+      <span className="text-lg font-medium text-primary">{value}</span>
     ) : (
       <div>
         <AnimateCounter
-          className="text-xl font-medium text-green-600 lg:text-2xl"
+          className="text-xl font-medium text-primary lg:text-2xl"
           total={value}
         />
         {unit && <span className="text-sm dark:text-neutral-400"> {unit}</span>}

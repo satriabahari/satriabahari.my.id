@@ -7,7 +7,7 @@ const TrueFocusService = () => {
         sentence="Web Mobile AI UI/UX"
         manualMode={false}
         blurAmount={5}
-        borderColor="green"
+        borderColor="yellow"
         animationDuration={1}
         pauseBetweenAnimations={1}
       />

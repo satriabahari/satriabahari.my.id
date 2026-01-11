@@ -51,7 +51,7 @@ export const BENTO: BentoItemProps[] = [
     visual: <MarqueeIcons />,
     href: "/",
     colSpan: 1,
-    className: "from-emerald-400 to-green-600",
+    className: "from-emerald-400 to-primary",
     isShow: true,
   },
   {

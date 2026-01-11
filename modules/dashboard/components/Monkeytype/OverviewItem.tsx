@@ -30,7 +30,7 @@ interface ItemHoveredProps {
 const Item = ({ data, type }: ItemProps) => (
   <div className="flex flex-col items-center gap-y-1">
     <span className="flex text-xs text-neutral-500">{`${data?.time} ${type}`}</span>
-    <span className="text-3xl text-green-600">
+    <span className="text-3xl text-primary">
       {Math.round(data?.maxWpm.wpm)}
     </span>
     <span className="text-lg text-neutral-600 dark:text-neutral-400">{`${Math.floor(data?.maxWpm.acc)}%`}</span>
@@ -40,12 +40,12 @@ const Item = ({ data, type }: ItemProps) => (
 const ItemHovered = ({ data, type }: ItemHoveredProps) => (
   <div className="flex flex-col items-center gap-y-1 text-xs">
     <span className="flex text-neutral-500">{`${data?.time} ${type}`}</span>
-    <span className="text-green-600">
+    <span className="text-primary">
       {`${Math.round(data?.maxWpm.wpm)} wpm`}
     </span>
-    <span className="text-green-600">{`${Math.floor(data?.maxWpm.raw)} raw`}</span>
-    <span className="text-green-600">{`${Math.floor(data?.maxWpm.acc)}% acc`}</span>
-    <span className="text-green-600">{`${Math.floor(data?.maxWpm.consistency)}% con`}</span>
+    <span className="text-primary">{`${Math.floor(data?.maxWpm.raw)} raw`}</span>
+    <span className="text-primary">{`${Math.floor(data?.maxWpm.acc)}% acc`}</span>
+    <span className="text-primary">{`${Math.floor(data?.maxWpm.consistency)}% con`}</span>
     <span className="text-neutral-500">{`${format(data?.maxWpm.timestamp, "dd MMM yyyy")}`}</span>
   </div>
 );

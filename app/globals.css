@@ -2,24 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body {
-  background: 
-    /* radial-gradient(ellipse 60% 50% at 50% -30%, rgba(250, 250, 250, 15%) 0%, rgb(8 0 0 / 0%)) no-repeat,
-    radial-gradient(ellipse 80% 35% at 50% -10%, rgba(150,65,193, 60%) 0%, rgb(8 0 0 / 0%)) no-repeat,
-    radial-gradient(ellipse 25% 25% at 30% -15%, rgba(34, 211, 238, 80%) 0%, rgb(8 0 0 / 0%)) no-repeat,
-    radial-gradient(ellipse 15% 15% at 60% -10%, rgba(254, 240, 138, 80%) 0%, rgb(8 0 0 / 0%)) no-repeat;
-} */
+@layer base {
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
 
-::-webkit-scrollbar {
-  @apply w-1;
-}
+  ::-webkit-scrollbar-track {
+    border-radius: 3px;
+    background-color: transparent;
+  }
 
-::-webkit-scrollbar-track {
-  @apply rounded-[3px] bg-transparent;
-}
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    border: 2px solid;
+    background-color: theme("colors.neutral.600");
+    border-color: theme("colors.neutral.300");
+  }
 
-::-webkit-scrollbar-thumb {
-  @apply rounded-[3px] border-2 border-neutral-300 bg-neutral-600 dark:bg-neutral-400;
+  .dark ::-webkit-scrollbar-thumb {
+    background-color: theme("colors.neutral.400");
+  }
 }
 
 @layer components {

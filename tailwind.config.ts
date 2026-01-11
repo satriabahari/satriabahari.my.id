@@ -11,9 +11,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        darkText: "#E4E6EB",
-        dark: "#121212",
-        light: "#fafafa",
+        primary: {
+          DEFAULT: "#fbe400",
+          500: "#ffff2e",
+          400: "#ffff5c",
+          300: "#ffff8a",
+          200: "#ffffb8",
+          100: "#ffffe6",
+        },
+        dark: {
+          DEFAULT: "#121212",
+        },
+        light: {
+          DEFAULT: "#fafafa",
+        },
+        neutral: {
+          DEFAULT: "#d4d4d4",
+        },
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

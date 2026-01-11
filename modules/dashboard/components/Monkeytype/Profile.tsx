@@ -21,7 +21,7 @@ const Item = ({ label, value }: ItemProps) => (
     <span className="text-xs text-neutral-600 dark:text-neutral-400">
       {label}
     </span>
-    <span className="text-2xl text-green-600">{value}</span>
+    <span className="text-2xl text-primary">{value}</span>
   </div>
 );
 
@@ -61,7 +61,7 @@ const Profile = ({ data }: ProfileProps) => {
   const XpProgress = () => (
     <div className="flex w-full items-center justify-between gap-3">
       <Tooltip title={`${data?.xp} ${t("total_xp")}`}>
-        <span className="text-sm font-medium text-green-600">{level}</span>
+        <span className="text-sm font-medium text-primary">{level}</span>
       </Tooltip>
 
       <div className="relative h-2 w-full rounded-full bg-neutral-300 dark:bg-dark ">
@@ -98,7 +98,7 @@ const Profile = ({ data }: ProfileProps) => {
           </div>
 
           <div className="flex flex-col">
-            <span className="text-2xl font-medium text-green-600">
+            <span className="text-2xl font-medium text-primary">
               {data?.name}
             </span>
             <Tooltip title={`${durationDays} ${t("days_ago")}`}>
