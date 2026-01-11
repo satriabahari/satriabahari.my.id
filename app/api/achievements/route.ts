@@ -4,29 +4,15 @@ import { getAchievementsData } from "@/services/achievements";
 
 export const GET = async (req: NextRequest) => {
   try {
-    const searchParams = req.nextUrl.searchParams;
-    const queryCategory = searchParams.get("category");
-    const querySearch = searchParams.get("search");
+    const { searchParams } = new URL(req.url);
 
-    if (queryCategory && querySearch) {
-      const data = await getAchievementsData({
-        category: queryCategory,
-        search: querySearch,
-      });
-      return NextResponse.json(data, { status: 200 });
-    }
+    // Ambil params dan konversi null menjadi undefined agar sesuai interface
+    const category = searchParams.get("category") || undefined;
+    const search = searchParams.get("search") || undefined;
 
-    if (queryCategory && queryCategory.trim()) {
-      const data = await getAchievementsData({ category: queryCategory });
-      return NextResponse.json(data, { status: 200 });
-    }
+    // Cukup satu kali panggil, biarkan service yang memfilter
+    const data = await getAchievementsData({ category, search });
 
-    if (querySearch) {
-      const data = await getAchievementsData({ search: querySearch });
-      return NextResponse.json(data, { status: 200 });
-    }
-
-    const data = await getAchievementsData({});
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     return NextResponse.json(

@@ -21,7 +21,13 @@ const AchievementCard = ({
   const t = useTranslations("AchievementsPage");
 
   return (
-    <Link href={url_credential} className="flex h-full" target="_blank">
+    <Link
+      href={
+        url_credential || "https://www.dicoding.com/certificates/81P2LGL38ZOY"
+      }
+      className="flex h-full"
+      target="_blank"
+    >
       <SpotlightCard className="group flex h-full flex-col overflow-hidden">
         <div className="relative">
           <Image

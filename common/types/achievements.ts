@@ -5,7 +5,7 @@ export interface AchievementItem {
   name: string;
   issuing_organization: string;
   category?: string;
-  url_credential: string;
+  url_credential?: string;
   issue_date: string;
   expiration_date?: string;
   image: string;
