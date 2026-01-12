@@ -68,7 +68,7 @@ const ChatList = ({
   }, [isWidget]);
 
   return (
-    <div ref={chatListRef} className="h-96 space-y-5 overflow-y-auto py-4">
+    <div ref={chatListRef} className="h-[26rem] space-y-5 overflow-y-auto py-4">
       {messages?.map((chat, index) => (
         <ChatItem
           key={index}
