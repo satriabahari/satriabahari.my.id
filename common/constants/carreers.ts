@@ -35,7 +35,7 @@ export const CAREERS: CareerProps[] = [
       "Ensured SEO optimization and fast performance by leveraging Next.js features such as static site generation.",
       "Collaborated with design and marketing teams to align web presence with brand identity.",
     ],
-    isShow: true,
+    isShow: false,
   },
   {
     position: "Head of Technology in the Research and Technology Division",

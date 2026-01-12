@@ -74,7 +74,7 @@ export const MENU_ITEMS: MenuItemProps[] = [
     title: "Smart Talk",
     href: "/smart-talk",
     icon: <SmartChatIcon size={iconSize} />,
-    isShow: true,
+    isShow: false,
     isExternal: false,
     eventName: "Pages: Dashboard",
     isExclusive: true,
