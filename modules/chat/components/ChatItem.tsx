@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
-import { MdAdminPanelSettings as AdminIcon } from "react-icons/md";
+import { RiUserStarLine as AuthorIcon } from "react-icons/ri";
 import { FiTrash2 as DeleteIcon } from "react-icons/fi";
 import { BsFillReplyAllFill as ReplyIcon } from "react-icons/bs";
 
@@ -67,8 +67,8 @@ const ChatItem = ({
         >
           <div className="text-sm dark:text-neutral-200">{name}</div>
           {condition && (
-            <div className="flex items-center gap-[2px] rounded-full bg-sky-500/20 px-1.5 py-0.5 font-medium text-sky-500 ">
-              <AdminIcon size={13} />
+            <div className="flex items-center gap-[2px] rounded-full border border-primary bg-neutral-800 px-1.5 py-0.5 font-medium text-primary ">
+              <AuthorIcon size={13} />
               <span className="text-[10px]">Author</span>
             </div>
           )}
@@ -78,7 +78,7 @@ const ChatItem = ({
         </div>
         <div
           className={clsx(
-            "group relative ml-1.5 mr-2 flex w-fit items-center gap-3",
+            "group relative flex w-fit items-center gap-3",
             condition && "flex-row-reverse",
           )}
           onMouseEnter={() => setIsHover(true)}
@@ -86,15 +86,21 @@ const ChatItem = ({
         >
           <div
             className={clsx(
-              "absolute top-1/2 h-3 w-3 -translate-y-1/2 rotate-45 bg-neutral-200 group-hover:bg-neutral-300 dark:bg-neutral-800 dark:group-hover:bg-neutral-600",
-              condition ? "-right-1" : "-left-1",
+              "rounded-xl rounded-tl-sm bg-neutral-200 px-4 py-3 group-hover:bg-neutral-300 dark:bg-neutral-800 dark:text-neutral-50 dark:group-hover:bg-neutral-600",
+              condition &&
+                "rounded-tl-xl rounded-tr-sm bg-primary text-dark group-hover:bg-primary-300 dark:bg-primary dark:text-dark dark:group-hover:bg-primary-400",
             )}
-          />
-
-          <div className="rounded-xl bg-neutral-200 px-4 py-2 group-hover:bg-neutral-300 dark:bg-neutral-800 dark:text-neutral-50 dark:group-hover:bg-neutral-600">
+          >
             {is_reply && (
               <>
-                <span className="text-emerald-500">@{reply_to} </span>
+                <span
+                  className={clsx(
+                    "font-semibold text-primary",
+                    condition && "text-dark",
+                  )}
+                >
+                  @{reply_to}{" "}
+                </span>
                 <span>{message}</span>
               </>
             )}
