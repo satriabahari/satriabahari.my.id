@@ -24,8 +24,6 @@ const AnimatedListProject = () => {
 
   return (
     <AnimatedList
-      // 2. Gunakan hasil 'projects' yang sudah di-map di atas
-      // Tidak perlu melakukan .map() lagi dengan logika startsWith di sini
       items={projects}
       itemImage={true}
       showGradients={false}
