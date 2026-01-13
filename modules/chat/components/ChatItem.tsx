@@ -15,7 +15,7 @@ import { MessageProps } from "@/common/types/chat";
 interface ChatItemProps extends MessageProps {
   isWidget?: boolean;
   onDelete: (id: string) => void;
-  onReply: (name: string) => void;
+  onReply: (name: string, email: string) => void;
 }
 
 const ChatItem = ({
@@ -112,7 +112,7 @@ const ChatItem = ({
               initial={{ opacity: 0, scale: 0, transform: "rotate(45deg)" }}
               animate={{ opacity: 1, scale: 1, transform: "rotate(0deg)" }}
               transition={{ duration: 0.2 }}
-              onClick={() => onReply(name)}
+              onClick={() => onReply(name, email)}
             >
               <Tooltip title="Reply">
                 <ReplyIcon
