@@ -88,15 +88,15 @@ const ChatItem = ({
             className={clsx(
               "rounded-xl rounded-tl-sm bg-neutral-200 px-4 py-3 group-hover:bg-neutral-300 dark:bg-neutral-800 dark:text-neutral-50 dark:group-hover:bg-neutral-600",
               condition &&
-                "rounded-tl-xl rounded-tr-sm bg-primary text-dark group-hover:bg-primary-300 dark:bg-primary dark:text-dark dark:group-hover:bg-primary-400",
+                "rounded-tl-xl rounded-tr-sm bg-primary text-dark group-hover:bg-primary-300 dark:bg-primary dark:!text-dark dark:group-hover:bg-primary-400",
             )}
           >
             {is_reply && (
               <>
                 <span
                   className={clsx(
-                    "font-semibold text-primary",
-                    condition && "text-dark",
+                    "font-medium text-primary",
+                    condition && "!text-dark dark:text-dark",
                   )}
                 >
                   @{reply_to}{" "}
