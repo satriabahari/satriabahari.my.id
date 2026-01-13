@@ -124,13 +124,13 @@ const ComboBoxFilter = ({
               </div>
 
               <div className="p-1">
-                {filteredData.length === 0 && (
+                {filteredData?.length === 0 && (
                   <div className="px-4 py-2 text-center text-sm text-neutral-900 dark:text-neutral-50">
                     no category found.
                   </div>
                 )}
 
-                {filteredData.map((item, index) => (
+                {filteredData?.map((item, index) => (
                   <button
                     key={index}
                     className="grid w-full grid-cols-[1.5rem_1fr] items-center rounded-[4px] p-2 text-neutral-900 hover:bg-neutral-300 dark:text-neutral-50 dark:hover:bg-neutral-800"
