@@ -20,7 +20,11 @@ export const ChatRoom = ({ isWidget = false }: { isWidget?: boolean }) => {
   const { data, isLoading } = useSWR("/api/chat", fetcher);
 
   const [messages, setMessages] = useState<MessageProps[]>([]);
-  const [isReply, setIsReply] = useState({ is_reply: false, name: "" });
+  const [isReply, setIsReply] = useState({
+    is_reply: false,
+    name: "",
+    email: "",
+  });
 
   const { data: session } = useSession();
 
@@ -28,13 +32,13 @@ export const ChatRoom = ({ isWidget = false }: { isWidget?: boolean }) => {
 
   const notif = useNotif();
 
-  const handleClickReply = (name: string) => {
+  const handleClickReply = (name: string, email: string) => {
     if (!session?.user) return notif("Please sign in to reply");
-    setIsReply({ is_reply: true, name });
+    setIsReply({ is_reply: true, name, email });
   };
 
   const handleCancelReply = () => {
-    setIsReply({ is_reply: false, name: "" });
+    setIsReply({ is_reply: false, name: "", email: "" });
   };
 
   const handleSendMessage = async (message: string) => {
@@ -126,6 +130,7 @@ export const ChatRoom = ({ isWidget = false }: { isWidget?: boolean }) => {
           onSendMessage={handleSendMessage}
           onCancelReply={handleCancelReply}
           replyName={isReply.name}
+          replyEmail={isReply.email}
           isWidget={isWidget}
         />
       ) : (

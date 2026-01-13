@@ -8,7 +8,7 @@ import { ChatListProps } from "@/common/types/chat";
 
 interface ChatListPropsNew extends ChatListProps {
   onDeleteMessage: (id: string) => void;
-  onClickReply: (name: string) => void;
+  onClickReply: (name: string, email: string) => void;
   isWidget?: boolean;
 }
 

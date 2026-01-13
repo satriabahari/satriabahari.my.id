@@ -4,6 +4,7 @@ import { FiSend as SendIcon } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { IoCloseCircle as CloseIcon } from "react-icons/io5";
+import { useSession } from "next-auth/react";
 
 import ChatUserInfo from "./ChatUserInfo";
 
@@ -11,24 +12,27 @@ import { ChatInputProps } from "@/common/types/chat";
 
 interface ChatInputPropsNew extends ChatInputProps {
   replyName?: string;
+  replyEmail?: string;
   isWidget?: boolean;
   onCancelReply: () => void;
 }
 
 const ChatInput = ({
   replyName,
+  replyEmail,
   isWidget,
   onSendMessage,
   onCancelReply,
 }: ChatInputPropsNew) => {
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const { data: session } = useSession();
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const t = useTranslations("ChatRoomPage");
 
-  const handleSendMessage = (e: FormEvent) => {
+  const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();
 
     if (isSending) return;
@@ -36,8 +40,34 @@ const ChatInput = ({
     setIsSending(true);
 
     try {
-      onSendMessage(message);
+      await onSendMessage(message);
+      if (session?.user) {
+        if (replyEmail && replyEmail !== session.user.email) {
+          await fetch("/api/chat/email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              type: "REPLY_NOTIFICATION",
+              targetEmail: replyEmail,
+              senderName: session.user.name,
+              message: message,
+            }),
+          });
+        } else if (!replyEmail) {
+          await fetch("/api/chat/email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              type: "NEW_CHAT",
+              name: session.user.name,
+              email: session.user.email,
+              message: message,
+            }),
+          });
+        }
+      }
       setMessage("");
+      onCancelReply();
     } catch (error) {
       console.log(error);
     } finally {
@@ -54,7 +84,7 @@ const ChatInput = ({
 
   return (
     <>
-      <form className="flex flex-col gap-2 px-4 border-t border-neutral-300 py-4 dark:border-neutral-700">
+      <form className="flex flex-col gap-2 border-t border-neutral-300 px-4 py-4 dark:border-neutral-700">
         {replyName && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -84,7 +114,7 @@ const ChatInput = ({
             type="submit"
             onClick={handleSendMessage}
             className={clsx(
-              "ml-2 rounded-md bg-sky-600 p-3 text-white transition duration-100 hover:bg-sky-500 active:scale-90",
+              "ml-2 rounded-md bg-primary p-3 text-dark transition duration-100 hover:bg-primary-500 active:scale-90",
               !message.trim() &&
                 "cursor-not-allowed !bg-neutral-700 active:scale-100",
             )}
