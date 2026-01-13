@@ -113,13 +113,13 @@ const CareerCard = ({
                 onClick={() => setIsShowResponsibility(!isShowResponsibility)}
                 className="-ml-1 flex items-center justify-center gap-x-1 transition duration-300 hover:text-neutral-800 dark:text-neutral-500 dark:hover:text-neutral-300"
               >
-                <ChevronIcon
-                  size={18}
-                  className={clsx({
-                    "rotate-90 transition-all duration-300":
-                      isShowResponsibility,
-                  })}
-                />
+                <motion.span
+                  animate={{ rotate: isShowResponsibility ? 90 : 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="inline-block"
+                >
+                  <ChevronIcon size={18} />
+                </motion.span>
                 <p className="text-sm">
                   {isShowResponsibility ? hideText : showText}{" "}
                   {responsibilityText}

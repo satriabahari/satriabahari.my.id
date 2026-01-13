@@ -46,7 +46,7 @@ export const CAREERS: CareerProps[] = [
     location_type: "Onsite",
     type: "Part-time",
     start_date: "2024-12",
-    end_date: null,
+    end_date: "2025-12",
     industry: "school",
     link: "https://himasi.unja.ac.id/",
     responsibilities: [
