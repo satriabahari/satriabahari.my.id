@@ -4,7 +4,8 @@ export interface AchievementItem {
   slug?: string;
   name: string;
   issuing_organization: string;
-  category?: string;
+  type: string;
+  category: string;
   url_credential?: string;
   issue_date: string;
   expiration_date?: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebounceValue } from "usehooks-ts";
 import { FiSearch as SearchIcon } from "react-icons/fi";
 
@@ -9,6 +9,8 @@ const InputSearch = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const initialSearch = searchParams.get("search") || "";
+
+  const pathname = usePathname();
 
   const [inputValue, setInputValue] = useState(initialSearch);
   const [debouncedValue] = useDebounceValue(inputValue, 1000);
@@ -18,12 +20,13 @@ const InputSearch = () => {
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    const params = new URLSearchParams(searchParams.toString());
     if (event.key === "Enter") {
       const searchValue = inputValue.trim();
       if (searchValue) {
-        router.push(`/achievements?search=${encodeURIComponent(searchValue)}`);
+        router.push(`${pathname}?${params.toString()}`);
       } else {
-        router.push("/achievements");
+        router.push(`${pathname}`);
       }
     }
   };
