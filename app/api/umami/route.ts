@@ -1,21 +1,17 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { getPageViewsByDataRange, getWebsiteStats } from "@/services/umami";
-import { UMAMI_ACCOUNT } from "@/common/constants/umami";
+import {
+  getPageViewsByDataRange,
+  getWebsiteStats,
+  getAllWebsiteData,
+} from "@/services/umami";
 
 export const GET = async (req: NextRequest) => {
-  const { websites } = UMAMI_ACCOUNT;
-
   try {
-    let domain = req.nextUrl.searchParams.get("domain");
+    const domain = req.nextUrl.searchParams.get("domain");
 
-    if (!domain) {
-      domain = websites?.[0]?.domain;
-      if (!domain) {
-        return NextResponse.json(
-          { message: "No available domain" },
-          { status: 400 },
-        );
-      }
+    if (domain === "all" || !domain) {
+      const combinedData = await getAllWebsiteData();
+      return NextResponse.json(combinedData, { status: 200 });
     }
 
     const pageViews = await getPageViewsByDataRange(domain);
@@ -39,6 +35,7 @@ export const GET = async (req: NextRequest) => {
       { status: 200 },
     );
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       { message: "Internal Server Error" },
       { status: 500 },

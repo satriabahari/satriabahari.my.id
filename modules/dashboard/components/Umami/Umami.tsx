@@ -18,35 +18,35 @@ import { UMAMI_ACCOUNT } from "@/common/constants/umami";
 
 const Umami = () => {
   const searchParams = useSearchParams();
-  const domain = searchParams.get("domain");
+  const domain = searchParams.get("domain") || "all";
 
-  const key = domain ? `/api/umami?domain=${domain}` : `/api/umami`;
+  const key = `/api/umami?domain=${domain}`;
 
   const { data, isLoading, error } = useSWR(key, fetcher);
-
   const { is_active } = UMAMI_ACCOUNT;
-
   const t = useTranslations("DashboardPage");
 
   if (!is_active) return null;
 
   return (
-    <section className="space-y-2">
-      <SectionHeading title={t("umami.title")} icon={<UmamiIcon />} />
-      <SectionSubHeading>
-        <div className="flex w-full flex-col gap-2 md:flex-row md:items-center md:justify-between">
-          <p>{t("umami.sub_title")} </p>
-
-          <ComboBoxFilter />
+    <section className="space-y-4">
+      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+        <div className="space-y-2">
+          <SectionHeading title={t("umami.title")} icon={<UmamiIcon />} />
+          <SectionSubHeading>
+            <p>{t("umami.sub_title")}</p>
+          </SectionSubHeading>
         </div>
-      </SectionSubHeading>
+
+        <ComboBoxFilter />
+      </div>
 
       {error ? (
         <EmptyState message={t("error")} />
       ) : isLoading ? (
         <UmamiSkeleton />
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-6">
           <Overview data={data} />
           <TrafficTrendsChart data={data} />
         </div>

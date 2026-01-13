@@ -1,118 +1,111 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { LuChevronsUpDown as ArrowIcon } from "react-icons/lu";
 import { TiTick as ActiveIcon } from "react-icons/ti";
 import { MdArrowOutward as LinkIcon } from "react-icons/md";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import cn from "@/common/libs/clsxm";
 import Button from "@/common/components/elements/Button";
 import { UMAMI_ACCOUNT } from "@/common/constants/umami";
 
 const ComboBoxFilter = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectValue, setSelectValue] = useState("");
-
-  const searchParams = useSearchParams();
-  const domainParams = searchParams.get("domain");
-
   const router = useRouter();
-  const comboBoxRef = useRef<HTMLDivElement>(null);
+  const searchParams = useSearchParams();
+  const domainParams = searchParams.get("domain") || "all";
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectValue, setSelectValue] = useState(domainParams);
+
+  const comboBoxRef = useRef<HTMLDivElement>(null);
   const { websites } = UMAMI_ACCOUNT;
 
-  const handleClickOpen = () => {
-    setIsOpen(!isOpen);
-  };
-
   const handleSelect = (newValue: string) => {
-    setSelectValue((prev) => (prev === newValue ? "" : newValue));
+    setSelectValue(newValue);
     setIsOpen(false);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      comboBoxRef.current &&
-      !comboBoxRef.current.contains(event.target as Node)
-    ) {
-      setIsOpen(false);
-    }
+    router.push(`/dashboard?domain=${newValue}`, { scroll: false });
   };
 
   useEffect(() => {
-    if (domainParams) {
-      setSelectValue(domainParams);
-    } else {
-      setSelectValue("");
-    }
+    setSelectValue(domainParams);
   }, [domainParams]);
 
   useEffect(() => {
-    if (selectValue === "") {
-      router.push(`/dashboard`);
-    } else {
-      router.push(`/dashboard?domain=${encodeURIComponent(selectValue)}`);
-    }
-  }, [router, selectValue]);
-
-  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        comboBoxRef.current &&
+        !comboBoxRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const displayLabel = selectValue === "all" ? "All" : selectValue;
+
   return (
-    <div ref={comboBoxRef} className="relative w-full md:w-[200px]">
+    <div ref={comboBoxRef} className="relative w-full md:w-[230px]">
       <Button
         className="flex w-full items-center justify-between gap-4 bg-neutral-100 p-2 text-neutral-900 outline outline-neutral-300 hover:bg-neutral-300 dark:bg-neutral-900 dark:text-neutral-400 dark:outline-neutral-700 dark:hover:bg-neutral-800"
-        onClick={handleClickOpen}
-        data-umami-event="click_filter_websites"
+        onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="text-sm">{selectValue || `Filter domains...`}</span>
+        <span className="text-sm font-medium">{displayLabel}</span>
         <ArrowIcon
-          className={cn("transition duration-200", isOpen && "scale-125")}
+          className={cn("transition duration-200", isOpen && "rotate-180")}
         />
       </Button>
 
-      {isOpen && (
-        <motion.div
-          initial={{ scale: 0, y: -20 }}
-          animate={{ scale: 1, y: 0 }}
-          className="absolute left-0 top-12 z-10 w-full"
-        >
-          <div className="w-full rounded-md bg-neutral-100 outline outline-neutral-300 dark:bg-neutral-900 dark:outline-neutral-600">
-            <div className="p-1">
-              {websites.length === 0 && (
-                <div className="px-4 py-2 text-center text-sm text-neutral-900 dark:text-neutral-50">
-                  no website found.
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute left-0 top-12 z-10 w-full rounded-md border bg-neutral-100 shadow-xl dark:border-neutral-800 dark:bg-neutral-900"
+          >
+            <div className="space-y-1 p-1">
+              <button
+                className="flex w-full items-center gap-2 rounded-md p-2 text-sm text-neutral-900 hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800"
+                onClick={() => handleSelect("all")}
+              >
+                <div className="w-4">
+                  {selectValue === "all" && <ActiveIcon size={16} />}
                 </div>
-              )}
+                <span>All</span>
+              </button>
+
+              <div className="my-1 h-[1px] bg-neutral-200 dark:bg-neutral-800" />
 
               {websites.map((item, index) => (
-                <button
-                  key={index}
-                  className="group grid w-full grid-cols-[1.5rem_1fr_1.5rem] items-center rounded-[4px] p-2 text-neutral-900 hover:bg-neutral-300 dark:text-neutral-50 dark:hover:bg-neutral-800"
-                  onClick={() => handleSelect(item.domain)}
-                >
-                  {item.domain === selectValue && <ActiveIcon />}
-                  <span className="col-start-2 flex w-fit justify-start text-sm">
-                    {item.domain}
-                  </span>
-                  <Link
+                <div key={index} className="group flex items-center gap-1">
+                  <button
+                    className="flex flex-grow items-center gap-2 rounded-md p-2 text-left text-sm text-neutral-900 hover:bg-neutral-200 dark:text-neutral-50 dark:hover:bg-neutral-800"
+                    onClick={() => handleSelect(item.domain)}
+                  >
+                    <div className="w-4">
+                      {selectValue === item.domain && <ActiveIcon size={16} />}
+                    </div>
+                    <span className="truncate">{item.domain}</span>
+                  </button>
+
+                  <a
                     href={item.umami_url}
                     target="_blank"
-                    className="m-auto ml-1 rounded-md p-1 transition duration-300 group-hover:scale-105 dark:bg-neutral-800 dark:group-hover:bg-neutral-900 bg-neutral-300 group-hover:bg-neutral-200"
+                    rel="noopener noreferrer"
+                    className="p-2 text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-50"
                   >
-                    <LinkIcon />
-                  </Link>
-                </button>
+                    <LinkIcon size={14} />
+                  </a>
+                </div>
               ))}
             </div>
-          </div>
-        </motion.div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

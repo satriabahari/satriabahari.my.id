@@ -25,7 +25,7 @@ const ProjectCard = ({
     <Link href={`/projects/${slug}`}>
       <SpotlightCard className="group relative cursor-pointer">
         {is_featured && (
-          <div className="absolute right-0 top-0 z-10 flex items-center gap-x-1 rounded-bl-lg rounded-tr-lg bg-cyan-500 px-2 py-1 text-sm font-medium text-neutral-900">
+          <div className="absolute right-0 top-0 z-10 flex items-center gap-x-1 rounded-bl-lg rounded-tr-lg bg-primary px-2 py-1 text-sm font-medium text-neutral-900">
             <PinIcon size={15} />
             <span>Featured</span>
           </div>
@@ -44,7 +44,7 @@ const ProjectCard = ({
           </div>
         </div>
         <div className="space-y-2 p-5">
-          <h3 className="cursor-pointer text-lg text-neutral-700 transition-all duration-300 dark:text-neutral-300">
+          <h3 className="cursor-pointer text-lg text-neutral-700 transition-all duration-300 group-hover:text-primary dark:text-neutral-300">
             {title}
           </h3>
           <p className="text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">

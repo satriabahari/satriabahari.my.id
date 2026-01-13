@@ -20,6 +20,7 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
   const datas = Object.values(data.allTimeLbs.time) || [];
 
   const Item = ({ label, value, percent }: ItemProps) => {
+    const number = value.replace("th", "");
     return (
       <div className="flex items-center gap-4">
         <div className="flex flex-col items-end gap-y-0.5">
@@ -32,7 +33,10 @@ const Leaderboard = ({ data }: LeaderboardProps) => {
             </span>
           ) : null}
         </div>
-        <span className="text-2xl text-primary">{value}</span>
+        <div className="flex gap-1">
+          <span className="text-2xl text-primary">{number}</span>
+          <span className="text-neutral-400">th</span>
+        </div>
       </div>
     );
   };

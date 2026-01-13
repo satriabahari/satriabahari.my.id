@@ -15,7 +15,7 @@ import { MessageProps } from "@/common/types/chat";
 interface ChatItemProps extends MessageProps {
   isWidget?: boolean;
   onDelete: (id: string) => void;
-  onReply: (name: string) => void;
+  onReply: (name: string, email: string) => void;
 }
 
 const ChatItem = ({
@@ -88,15 +88,15 @@ const ChatItem = ({
             className={clsx(
               "rounded-xl rounded-tl-sm bg-neutral-200 px-4 py-3 group-hover:bg-neutral-300 dark:bg-neutral-800 dark:text-neutral-50 dark:group-hover:bg-neutral-600",
               condition &&
-                "rounded-tl-xl rounded-tr-sm bg-primary text-dark group-hover:bg-primary-300 dark:bg-primary dark:text-dark dark:group-hover:bg-primary-400",
+                "rounded-tl-xl rounded-tr-sm bg-primary text-dark group-hover:bg-primary-300 dark:bg-primary dark:!text-dark dark:group-hover:bg-primary-400",
             )}
           >
             {is_reply && (
               <>
                 <span
                   className={clsx(
-                    "font-semibold text-primary",
-                    condition && "text-dark",
+                    "font-medium text-primary",
+                    condition && "!text-dark dark:text-dark",
                   )}
                 >
                   @{reply_to}{" "}
@@ -112,7 +112,7 @@ const ChatItem = ({
               initial={{ opacity: 0, scale: 0, transform: "rotate(45deg)" }}
               animate={{ opacity: 1, scale: 1, transform: "rotate(0deg)" }}
               transition={{ duration: 0.2 }}
-              onClick={() => onReply(name)}
+              onClick={() => onReply(name, email)}
             >
               <Tooltip title="Reply">
                 <ReplyIcon

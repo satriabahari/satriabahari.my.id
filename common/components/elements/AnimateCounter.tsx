@@ -12,11 +12,13 @@ const AnimateCounter = ({ total, ...rest }: AnimateCounterProps) => {
   useEffect(() => {
     const count = countRef.current;
 
+    const formatter = new Intl.NumberFormat("id-ID");
+
     const controls: AnimationPlaybackControls = animate(initialCount, total, {
       duration: 1,
       onUpdate: (value) => {
         if (count) {
-          count.textContent = Math.floor(value).toString();
+          count.textContent = formatter.format(Math.floor(value));
         }
       },
     });

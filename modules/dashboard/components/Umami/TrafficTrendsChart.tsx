@@ -37,7 +37,7 @@ interface DataProps {
 }
 
 const TrafficTrendsChart = ({ data }: DataProps) => {
-  const rawLabels = data?.pageviews?.map((point) => point.x);
+  const rawLabels = data?.pageviews?.map((point) => point.x) || [];
   const labels = rawLabels?.map((isoDate) => format(parseISO(isoDate), "MMM"));
 
   const chartData = {
@@ -45,35 +45,41 @@ const TrafficTrendsChart = ({ data }: DataProps) => {
     datasets: [
       {
         label: "Sessions",
-        data: data?.sessions?.map((point) => point.y),
+        data: data?.sessions?.map((point) => point.y) || [],
         backgroundColor: "rgba(255, 255, 184, 0.7)",
         stack: "traffic",
+        borderRadius: 4,
       },
       {
         label: "Page views",
-        data: data?.pageviews?.map((point) => point.y),
-        backgroundColor: "rgba(251, 228, 0,0.7)",
+        data: data?.pageviews?.map((point) => point.y) || [],
+        backgroundColor: "rgba(251, 228, 0, 0.7)",
         stack: "traffic",
+        borderRadius: 4,
       },
     ],
   };
 
   const options: ChartOptions<"bar"> = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "top",
+        labels: {
+          usePointStyle: true,
+          boxWidth: 8,
+        },
       },
       title: {
-        display: true,
-        text: "Stacked Traffic Trends",
+        display: false,
       },
       tooltip: {
         callbacks: {
           title: (tooltipItems) => {
             const index = tooltipItems[0].dataIndex;
             const isoDate = rawLabels[index];
-            return format(parseISO(isoDate), "MMM yyyy");
+            return isoDate ? format(parseISO(isoDate), "MMM yyyy") : "";
           },
         },
       },
@@ -81,15 +87,19 @@ const TrafficTrendsChart = ({ data }: DataProps) => {
     scales: {
       x: {
         stacked: true,
+        grid: {
+          display: false,
+        },
       },
       y: {
         stacked: true,
+        beginAtZero: true,
       },
     },
   };
 
   return (
-    <div className="mx-auto w-full max-w-3xl">
+    <div className="h-[350px] w-full md:h-[400px]">
       <Bar data={chartData} options={options} />
     </div>
   );
