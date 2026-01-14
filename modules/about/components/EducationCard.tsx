@@ -13,6 +13,7 @@ const EducationCard = ({
   end_year,
   link,
   location,
+  GPA,
 }: EducationProps) => {
   return (
     <SpotlightCard className="flex items-start gap-5 p-6">
@@ -33,6 +34,15 @@ const EducationCard = ({
               •
             </span>
             <span>{major}</span>
+            {GPA && (
+              <>
+                <span className="hidden text-neutral-300 dark:text-neutral-700 md:block">
+                  •
+                </span>
+                <span>GPA: </span>
+                <span>{GPA}</span>
+              </>
+            )}
           </div>
           <div className="flex flex-col gap-1 text-[12px] md:flex-row md:gap-2">
             <span className="dark:text-neutral-500">

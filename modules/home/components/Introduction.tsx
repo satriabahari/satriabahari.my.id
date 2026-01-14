@@ -3,6 +3,8 @@ import { useTranslations } from "next-intl";
 const Introduction = () => {
   const t = useTranslations("HomePage");
 
+  const paragrafData = [{ index: 1 }, { index: 2 }];
+
   return (
     <section className="space-y-2 bg-cover bg-no-repeat">
       <div className="text-3xl font-medium text-neutral-900 dark:text-neutral-50">
@@ -14,9 +16,13 @@ const Introduction = () => {
           <li>{t("location")}</li>
           <li>{t("location_type")}</li>
         </ul>
-        <p className="mt-6 leading-loose text-neutral-600 dark:text-neutral-300">
-          {t("resume")}
-        </p>
+        <div className="mt-6 space-y-4 leading-7 text-neutral-600 dark:text-neutral-300">
+          {paragrafData.map((paragraph) => (
+            <div key={paragraph.index}>
+              {t(`resume.paragraf_${paragraph.index}`)}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

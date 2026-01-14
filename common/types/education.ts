@@ -4,7 +4,8 @@ export type EducationProps = {
   logo: string;
   location: string;
   degree: string;
+  GPA?: string;
   start_year: number;
   end_year: number;
   link: string;
-}
+};
