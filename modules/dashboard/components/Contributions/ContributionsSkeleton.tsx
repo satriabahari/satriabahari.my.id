@@ -10,8 +10,8 @@ const ContributionsSkeleton = () => {
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {[...Array(4)].map((_, i) => (
             <SpotlightCard key={i} className="p-4">
-              <Skeleton className="h-4" />
-              <Skeleton className="h-6" />
+              <Skeleton containerClassName="block" className="h-4" />
+              <Skeleton containerClassName="block" className="h-6" />
             </SpotlightCard>
           ))}
         </div>
@@ -21,9 +21,9 @@ const ContributionsSkeleton = () => {
             <div key={i} className="flex gap-1">
               {[...Array(30)].map((_, i) => (
                 <Skeleton
+                  containerClassName="w-full block"
                   key={i}
                   className="h-4 w-2"
-                  containerClassName="w-full"
                 />
               ))}
             </div>

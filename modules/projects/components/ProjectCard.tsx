@@ -44,7 +44,7 @@ const ProjectCard = ({
           </div>
         </div>
         <div className="space-y-2 p-5">
-          <h3 className="cursor-pointer text-lg text-neutral-700 transition-all duration-300 group-hover:text-primary dark:text-neutral-300">
+          <h3 className="cursor-pointer text-neutral-700 transition-all duration-300 group-hover:text-primary dark:text-neutral-300">
             {title}
           </h3>
           <p className="text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">

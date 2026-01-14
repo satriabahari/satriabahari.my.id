@@ -60,7 +60,7 @@ const CareerCard = ({
           height={60}
           src={logo}
           alt={company}
-          className="rounded-lg border-[1.5px] border-neutral-800 bg-neutral-100 dark:border-neutral-300"
+          className="rounded-lg border-[1.5px] border-neutral-300 bg-neutral-100 dark:border-neutral-700"
         />
       ) : (
         <CompanyIcon size={65} />
