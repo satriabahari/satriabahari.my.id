@@ -29,30 +29,33 @@ const GITHUB_USER_QUERY = `query($username: String!) {
   }
 }`;
 
+const fetcher = async (username: string, token: string) => {
+  const response = await axios.post(
+    GITHUB_USER_ENDPOINT,
+    {
+      query: GITHUB_USER_QUERY,
+      variables: { username },
+    },
+    {
+      headers: { Authorization: `bearer ${token}` },
+    },
+  );
+  return response.data.data.user;
+};
+
+const getCachedGithubData = unstable_cache(
+  async (username: string, token: string) => fetcher(username, token),
+  ["github-stats-key"],
+  { tags: ["github-data-tag"] },
+);
+
 export const getGithubData = async () => {
   const { username, token } = GITHUB_ACCOUNTS;
 
-  const cachedData = unstable_cache(
-    async () => {
-      const response = await axios.post(
-        GITHUB_USER_ENDPOINT,
-        {
-          query: GITHUB_USER_QUERY,
-          variables: { username },
-        },
-        {
-          headers: { Authorization: `bearer ${token}` },
-        },
-      );
+  if (!username || !token) {
+    console.error("GITHUB_ACCOUNTS: Username atau Token tidak ditemukan.");
+    return { status: 500, data: {} };
+  }
 
-      if (response.status > 400) return { status: response.status, data: {} };
-      return { status: response.status, data: response.data.data.user };
-    },
-    ["github-stats-key"],
-    {
-      tags: ["github-data-tag"],
-    },
-  );
-
-  return cachedData();
+  return await getCachedGithubData(username, token);
 };
