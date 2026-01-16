@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { revalidateTag } from "next/cache";
 import crypto from "crypto";
 
-export const POST = async (request: NextRequest) => {
+export async function POST(request: NextRequest) {
   try {
     const payload = await request.text();
     const signature = request.headers.get("x-hub-signature-256");
@@ -10,7 +10,7 @@ export const POST = async (request: NextRequest) => {
 
     if (!secret) {
       return NextResponse.json(
-        { message: "Server secret not configured" },
+        { message: "Secret not configured" },
         { status: 500 },
       );
     }
@@ -20,21 +20,21 @@ export const POST = async (request: NextRequest) => {
 
     if (signature !== digest) {
       return NextResponse.json(
-        { message: "Unauthorized: Invalid signature" },
+        { message: "Invalid signature" },
         { status: 401 },
       );
     }
 
     revalidateTag("github-data-tag");
 
-    return NextResponse.json({
-      revalidated: true,
-      now: Date.now(),
-    });
-  } catch (err) {
     return NextResponse.json(
-      { message: "Internal Server Error" },
-      { status: 500 },
+      {
+        revalidated: true,
+        now: Date.now(),
+      },
+      { status: 200 },
     );
+  } catch (err) {
+    return NextResponse.json({ message: "Internal Error" }, { status: 500 });
   }
-};
+}
