@@ -1,19 +1,26 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import axios from "axios";
+import useSWR from 'swr';
+import axios from 'axios';
 
-export default function TikTokCard() {
-  const [stats, setStats] = useState<any>(null);
+const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
-  useEffect(() => {
-    axios
-      .get("/api/tiktok")
-      .then((res) => setStats(res.data))
-      .catch((err) => console.error(err));
-  }, []);
+export default function TikTokStatsCard() {
+  const { data, error, isLoading } = useSWR('/api/tiktok', fetcher);
 
-  if (!stats) return <p>Loading...</p>;
+  if (error) return <div>Error loading stats</div>;
+  if (isLoading) return <div>Loading...</div>;
 
-  return <div>{stats.follower_count} Followers</div>;
+  return (
+    <div className="flex gap-4 p-4 border rounded-lg">
+      <div className="text-center">
+        <p className="font-bold text-xl">{data.follower_count}</p>
+        <p className="text-xs text-gray-500">Followers</p>
+      </div>
+      <div className="text-center">
+        <p className="font-bold text-xl">{data.likes_count}</p>
+        <p className="text-xs text-gray-500">Likes</p>
+      </div>
+    </div>
+  );
 }

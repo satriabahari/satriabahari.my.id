@@ -1,19 +1,31 @@
 import { NextResponse } from "next/server";
-import { TikTokService } from "@/services/tiktok";
+import { getTiktokProfileData } from "@/services/tiktok";
 
-export const GET = async () => {
+/**
+ * Mencegah Next.js mencoba melakukan static render saat build.
+ * Ini adalah solusi utama untuk error 'requestAsyncStorage' yang Anda alami.
+ */
+export const dynamic = "force-dynamic";
+
+export async function GET() {
   try {
-    const stats = await TikTokService.getProfileStats();
+    // Memanggil service untuk mengelola token dan fetch data TikTok
+    const data = await getTiktokProfileData();
 
-    if (!stats) {
+    if (!data) {
       return NextResponse.json(
-        { error: "Data stats tidak ditemukan" },
-        { status: 404 },
+        { error: "Gagal mengambil data dari TikTok" },
+        { status: 500 },
       );
     }
 
-    return NextResponse.json(stats);
+    // Mengembalikan hasil statistik (followers, likes, video_count)
+    return NextResponse.json(data);
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Route Error:", error.message);
+    return NextResponse.json(
+      { error: "Internal Server Error", message: error.message },
+      { status: 500 },
+    );
   }
-};
+}
