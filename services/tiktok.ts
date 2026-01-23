@@ -31,12 +31,17 @@ export const refreshAccessToken = async (id: string, refreshToken: string) => {
     refresh_token: refreshToken,
   });
 
-  const response = await axios.post("https://open.tiktokapis.com/v2/oauth/token/", params, {
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  });
+  const response = await axios.post(
+    "https://open.tiktokapis.com/v2/oauth/token/",
+    params,
+    {
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    },
+  );
 
   const data = response.data;
-  if (!data.access_token) throw new Error("Gagal mendapatkan token baru dari TikTok");
+  if (!data.access_token)
+    throw new Error("Gagal mendapatkan token baru dari TikTok");
 
   const expiresAt = new Date(Date.now() + data.expires_in * 1000).toISOString();
 
@@ -67,6 +72,31 @@ export const getValidToken = async () => {
   return tokenData.access_token;
 };
 
+export const upsertTikTokToken = async (account: any) => {
+  const supabase = createClient();
+  const expiresAt = new Date(
+    Date.now() + account.expires_at * 1000,
+  ).toISOString();
+
+  // Karena ini untuk portfolio pribadi (single user),
+  // kita gunakan upsert pada record pertama yang ada.
+  const { data: existingToken } = await supabase
+    .from("tiktok_tokens")
+    .select("id")
+    .limit(1)
+    .single();
+
+  const { error } = await supabase.from("tiktok_tokens").upsert({
+    id: existingToken?.id || undefined, // Gunakan ID lama jika ada, jika tidak biarkan generate baru
+    access_token: account.access_token,
+    refresh_token: account.refresh_token,
+    expires_at: expiresAt,
+  });
+
+  if (error)
+    throw new Error(`Gagal menyimpan token ke Supabase: ${error.message}`);
+};
+
 /**
  * Mengambil data profil TikTok menggunakan Axios.
  */
@@ -80,10 +110,10 @@ export const getTiktokProfileData = async () => {
         params: {
           fields: "follower_count,likes_count,video_count",
         },
-        headers: { 
-          Authorization: `Bearer ${token}` 
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
     return response.data.data?.user || null;
