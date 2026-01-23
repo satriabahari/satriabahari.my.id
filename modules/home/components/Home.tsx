@@ -2,7 +2,7 @@ import Breakline from "@/common/components/elements/Breakline";
 
 import Introduction from "./Introduction";
 import SkillList from "./SkillList";
-import BentoGrid from "./Bento/BentoGrid";
+import { BentoGrid } from "./bento/BentoGrid";
 
 const Home = () => {
   return (
@@ -10,8 +10,8 @@ const Home = () => {
       <Introduction />
       <Breakline className="my-8" />
       <SkillList />
-      {/* <Breakline className="my-8" /> */}
-      {/* <BentoGrid /> */}
+      <Breakline className="my-8" />
+      <BentoGrid />
     </>
   );
 };

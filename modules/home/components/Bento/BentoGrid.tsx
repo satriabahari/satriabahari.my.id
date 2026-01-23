@@ -1,30 +1,49 @@
-import BentoCard from "./BentoCard";
-import { SiBento as BentoIcon } from "react-icons/si";
-import { useTranslations } from "next-intl";
+import { getProjectsData } from "@/services/projects";
+import { HeroStatementCard } from "./HeroStatementCard";
+import { ProjectsCard } from "./ProjectsCard";
+import { SocialMediaGrid } from "./SocialMediaGrid";
+import { TechStackCard } from "./TechStackCard";
+import IntroductionCard from "./IntroductionCard";
 
-import SectionHeading from "@/common/components/elements/SectionHeading";
-import SectionSubHeading from "@/common/components/elements/SectionSubHeading";
-import { BENTO } from "@/common/constants/bento";
-
-const BentoGrid = () => {
-  const t = useTranslations("HomePage.bento");
-
-  const filteredBento = BENTO.filter((item) => item?.isShow);
+export async function BentoGrid() {
+  const projects = await getProjectsData();
+  const recentProjects = projects
+    .filter((p) => p.is_show)
+    .sort((a, b) => b.id - a.id)
+    .slice(0, 2);
 
   return (
-    <section className="space-y-5">
-      <div className="space-y-3">
-        <SectionHeading title={t("title")} icon={<BentoIcon size={24} />} />
-        <SectionSubHeading>{t("sub_title")}</SectionSubHeading>
-      </div>
+    <div className="min-h-screen  text-white">
+      <div className="mx-auto max-w-7xl">
+        {/* Grid Layout - 3 columns */}
+        <div className="grid grid-cols-12 gap-4">
+          {/* Row 1 */}
+          <div className="md:col-span-3">
+            <IntroductionCard />
+          </div>
 
-      <div className="grid grid-cols-1 gap-2 md:grid-cols-4">
-        {filteredBento.map((item, index) => (
-          <BentoCard key={index} {...item} />
-        ))}
+          <div className="md:col-span-3">
+            <SocialMediaGrid />
+          </div>
+
+          <div className="md:col-span-6">
+            <HeroStatementCard />
+          </div>
+
+          {/* Row 2 */}
+          <div className="md:col-span-2">
+            <TechStackCard />
+          </div>
+
+          <div className="md:col-span-7">
+            <ProjectsCard projects={recentProjects} />
+          </div>
+
+          <div className="md:col-span-3">
+            <TechStackCard />
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
   );
-};
-
-export default BentoGrid;
+}
