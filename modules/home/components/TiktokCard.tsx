@@ -1,23 +1,19 @@
-import { TikTokService } from "@/services/tiktok";
+"use client";
 
-export default async function TikTokCard() {
-  const stats = await TikTokService.getProfileStats();
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-  if (!stats) return null;
+export default function TikTokCard() {
+  const [stats, setStats] = useState<any>(null);
 
-  return (
-    <div className="rounded-lg border bg-neutral-50 p-4 dark:bg-neutral-900">
-      <h3 className="text-lg font-semibold">TikTok Stats</h3>
-      <div className="mt-2 flex gap-4">
-        <div>
-          <p className="text-xs uppercase text-neutral-500">Followers</p>
-          <p className="font-bold">{stats.follower_count.toLocaleString()}</p>
-        </div>
-        <div>
-          <p className="text-xs uppercase text-neutral-500">Likes</p>
-          <p className="font-bold">{stats.likes_count.toLocaleString()}</p>
-        </div>
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    axios
+      .get("/api/tiktok")
+      .then((res) => setStats(res.data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  if (!stats) return <p>Loading...</p>;
+
+  return <div>{stats.follower_count} Followers</div>;
 }
