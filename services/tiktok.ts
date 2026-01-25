@@ -1,11 +1,16 @@
 import axios from "axios";
 import { createClient } from "@/common/utils/server";
 
-/**
- * Mengambil baris token pertama dari Supabase.
- * Inisialisasi client di dalam fungsi untuk menghindari error saat build.
- */
-export const getStoredToken = async () => {
+const CLIENT_KEY = process.env.TIKTOK_CLIENT_KEY!;
+const CLIENT_SECRET = process.env.TIKTOK_CLIENT_SECRET!;
+const STATIC_ID = "00000000-0000-0000-0000-000000000001";
+
+const profileFields =
+  "avatar_large_url,display_name,bio_description,profile_deep_link,username,follower_count,following_count,likes_count,video_count";
+const videoFields =
+  "id,create_time,cover_image_url,share_url,height,width,title,embed_html,embed_link,like_count,comment_count,share_count,view_count";
+
+export async function getStoredToken() {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("tiktok_tokens")
@@ -13,20 +18,35 @@ export const getStoredToken = async () => {
     .limit(1)
     .single();
 
-  if (error || !data) throw new Error("Token tidak ditemukan di database");
+  if (error || !data) throw new Error("Token tidak ditemukan di database.");
   return data;
-};
+}
 
-/**
- * Memperbarui access_token menggunakan refresh_token melalui Axios.
- */
-export const refreshAccessToken = async (id: string, refreshToken: string) => {
+export async function saveTikTokTokens(tokenData: any) {
   const supabase = createClient();
+  const expiresAt = new Date(
+    Date.now() + tokenData.expires_in * 1000,
+  ).toISOString();
+  const refreshExpiresAt = new Date(
+    Date.now() + (tokenData.refresh_expires_in || 15552000) * 1000,
+  ).toISOString();
 
-  // Menyiapkan data body dalam format x-www-form-urlencoded
+  const { error } = await supabase.from("tiktok_tokens").upsert({
+    id: STATIC_ID,
+    access_token: tokenData.access_token,
+    refresh_token: tokenData.refresh_token,
+    expires_at: expiresAt,
+    refresh_expires_at: refreshExpiresAt,
+    updated_at: new Date().toISOString(),
+  });
+
+  if (error) throw new Error(`Gagal menyimpan ke Supabase: ${error.message}`);
+}
+
+export async function refreshTikTokToken(refreshToken: string) {
   const params = new URLSearchParams({
-    client_key: process.env.TIKTOK_CLIENT_KEY!,
-    client_secret: process.env.TIKTOK_CLIENT_SECRET!,
+    client_key: CLIENT_KEY,
+    client_secret: CLIENT_SECRET,
     grant_type: "refresh_token",
     refresh_token: refreshToken,
   });
@@ -39,88 +59,53 @@ export const refreshAccessToken = async (id: string, refreshToken: string) => {
     },
   );
 
-  const data = response.data;
-  if (!data.access_token)
-    throw new Error("Gagal mendapatkan token baru dari TikTok");
+  if (!response.data.access_token)
+    throw new Error("Gagal mendapatkan token baru.");
 
-  const expiresAt = new Date(Date.now() + data.expires_in * 1000).toISOString();
+  await saveTikTokTokens(response.data);
+  return response.data.access_token;
+}
 
-  // Update record berdasarkan ID yang ditemukan secara dinamis
-  await supabase
-    .from("tiktok_tokens")
-    .update({
-      access_token: data.access_token,
-      refresh_token: data.refresh_token,
-      expires_at: expiresAt,
-    })
-    .eq("id", id);
-
-  return data.access_token;
-};
-
-/**
- * Validasi token: Jika expired, otomatis melakukan refresh.
- */
-export const getValidToken = async () => {
-  const tokenData = await getStoredToken();
-  const isExpired = new Date() >= new Date(tokenData.expires_at);
+export async function getValidAccessToken() {
+  const record = await getStoredToken();
+  const isExpired = new Date() >= new Date(record.expires_at);
 
   if (isExpired) {
-    return await refreshAccessToken(tokenData.id, tokenData.refresh_token);
+    return await refreshTikTokToken(record.refresh_token);
   }
 
-  return tokenData.access_token;
-};
+  return record.access_token;
+}
 
-export const upsertTikTokToken = async (account: any) => {
-  const supabase = createClient();
-  const expiresAt = new Date(
-    Date.now() + account.expires_at * 1000,
-  ).toISOString();
+export async function getTikTokProfile() {
+  const token = await getValidAccessToken();
 
-  // Karena ini untuk portfolio pribadi (single user),
-  // kita gunakan upsert pada record pertama yang ada.
-  const { data: existingToken } = await supabase
-    .from("tiktok_tokens")
-    .select("id")
-    .limit(1)
-    .single();
+  const response = await axios.get(
+    `https://open.tiktokapis.com/v2/user/info/?fields=${profileFields}`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    },
+  );
 
-  const { error } = await supabase.from("tiktok_tokens").upsert({
-    id: existingToken?.id || undefined, // Gunakan ID lama jika ada, jika tidak biarkan generate baru
-    access_token: account.access_token,
-    refresh_token: account.refresh_token,
-    expires_at: expiresAt,
-  });
+  return response.data.data?.user || null;
+}
 
-  if (error)
-    throw new Error(`Gagal menyimpan token ke Supabase: ${error.message}`);
-};
+export async function getTikTokVideos(
+  cursor: number = 0,
+  maxCount: number = 10,
+) {
+  const token = await getValidAccessToken();
 
-/**
- * Mengambil data profil TikTok menggunakan Axios.
- */
-export const getTiktokProfileData = async () => {
-  try {
-    const token = await getValidToken();
-
-    const response = await axios.get(
-      "https://open.tiktokapis.com/v2/user/info/",
-      {
-        params: {
-          fields: "follower_count,likes_count,video_count",
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+  const response = await axios.post(
+    `https://open.tiktokapis.com/v2/video/list/?fields=${videoFields}`,
+    { cursor, max_count: maxCount },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
-    );
+    },
+  );
 
-    return response.data.data?.user || null;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error("TikTok API Error:", error.response?.data || error.message);
-    }
-    return null;
-  }
-};
+  return response.data.data || { videos: [], has_more: false, cursor: 0 };
+}

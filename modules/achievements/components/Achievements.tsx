@@ -35,7 +35,7 @@ const Achievements = () => {
   const apiUrl = `/api/achievements${queryParams.toString() ? `?${queryParams.toString()}` : ""}`;
 
   const { data, isLoading, error } = useSWR(apiUrl, fetcher);
-
+  
   const filteredAchievements: AchievementItem[] = data
     ?.filter((item: AchievementItem) => {
       const matchesShow = item?.is_show;

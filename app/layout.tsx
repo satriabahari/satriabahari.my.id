@@ -12,6 +12,7 @@ import ThemeProviderContext from "@/common/stores/theme";
 import NextAuthProvider from "@/SessionProvider";
 import { METADATA } from "@/common/constants/metadata";
 import { inter } from "@/common/styles/fonts";
+import SkeletonThemeProvider from "@/SkeletonThemeProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -70,7 +71,9 @@ const RootLayout = async ({
         <NextIntlClientProvider messages={messages}>
           <NextAuthProvider session={session}>
             <ThemeProviderContext>
-              <Layouts>{children}</Layouts>
+              <SkeletonThemeProvider>
+                <Layouts>{children}</Layouts>
+              </SkeletonThemeProvider>
             </ThemeProviderContext>
           </NextAuthProvider>
         </NextIntlClientProvider>
