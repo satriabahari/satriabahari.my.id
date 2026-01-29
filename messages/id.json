@@ -1,9 +1,12 @@
 {
   "HomePage": {
-    "intro": "Hai, saya Satria Bahari",
+    "intro": "Halo, saya Satria Bahari",
     "location": "Berdomisili di Jambi, Indonesia 🇮🇩",
-    "location_type": "Tatap Muka",
-    "resume": "Pengembang Fullstack yang berpengalaman dan penuh semangat, berspesialisasi dalam membangun solusi digital yang skalabel dan efisien. Di sisi frontend, saya menggunakan Next.js, TypeScript, dan Tailwind CSS untuk membuat antarmuka pengguna yang responsif dan mudah diakses. Di sisi backend, saya mengembangkan layanan yang tangguh menggunakan Golang, dan untuk mobile, saya membangun aplikasi Android native menggunakan Kotlin. Saya adalah engineer yang kolaboratif dan berorientasi pada detail, berkomitmen untuk menghadirkan aplikasi lintas platform yang terstruktur dengan baik dan berkinerja tinggi.",
+    "location_type": "Onsite",
+    "resume": {
+      "paragraph_1": "Seorang Software Engineer dan kreator konten coding yang berdedikasi untuk membangun solusi digital yang berdampak. Saya spesialis dalam pengembangan platform web yang skalabel dan aplikasi mobile menggunakan tech stack modern, terutama Next.js, TypeScript, dan Native Android (Kotlin).",
+      "paragraph_2": "Fokus saya adalah merancang arsitektur perangkat lunak yang terstruktur dengan baik, mudah dipelihara, dan selaras dengan tujuan bisnis. Saya memadukan keahlian teknis dengan komunikasi proaktif dan kepemimpinan untuk memastikan setiap proyek memberikan kejelasan logis dan dampak nyata di dunia nyata."
+    },
     "skills": {
       "title": "Keahlian",
       "sub_title": "Keahlian profesional saya."
@@ -11,19 +14,18 @@
     "bento": {
       "title": "Bagian Unggulan",
       "sub_title": "Jelajahi semua yang telah saya buat, kontribusikan, dan capai."
-    }
+    },
+    "error": "Terjadi kesalahan pada server.",
+    "no_data": "Data tidak tersedia."
   },
   "AboutPage": {
     "title": "Tentang",
-    "description": "Perkenalan singkat tentang siapa saya.",
+    "description": "Pengenalan singkat mengenai siapa saya.",
     "resume": {
-      "paragraf_1": "Halo! Terima kasih telah mengunjungi situs pribadi saya. Saya Satria Bahari, seorang mahasiswa Sistem Informasi di Universitas Jambi. Saya adalah seorang Fullstack Developer dengan minat besar dalam membangun produk perangkat lunak yang berdampak. Stack teknologi saya meliputi teknologi frontend modern seperti Next.js, TypeScript, dan Tailwind CSS, serta pengembangan backend menggunakan Golang. Untuk aplikasi mobile, saya mengembangkan aplikasi Android native menggunakan Kotlin.",
-
-      "paragraf_2": "Saya menikmati menciptakan solusi yang ramah pengguna dan memiliki performa tinggi. Baik saat membangun antarmuka yang intuitif maupun merancang layanan backend, saya selalu berusaha membawa efisiensi dan kejelasan pada setiap lapisan aplikasi. Saya pembelajar cepat yang tumbuh dalam lingkungan dinamis dan senang menyelesaikan masalah kompleks secara kolaboratif.",
-
-      "paragraf_3": "Saya percaya bahwa komunikasi yang baik dan sinergi tim adalah kunci kesuksesan dalam pengembangan perangkat lunak. Pengalaman saya telah membentuk kemampuan teknis dan analitis saya, serta kualitas kepemimpinan saya. Saya selalu bersemangat untuk bekerja dalam tim, belajar dari orang lain, dan berkontribusi pada proyek yang berdampak.",
-
-      "paragraf_4": "Salam hangat,"
+      "paragraph_1": "Saya Satria Bahari, seorang Software Engineer yang berbasis di Jambi, berdedikasi untuk membangun solusi digital yang berdampak. Saya spesialis dalam pengembangan platform web dan aplikasi mobile menggunakan tech stack modern, termasuk Next.js, TypeScript, dan pengembangan Android native dengan Kotlin.",
+      "paragraph_2": "Fokus utama saya adalah merancang arsitektur perangkat lunak yang tidak hanya berfungsi tetapi juga terstruktur dengan baik, mudah dipelihara, dan skalabel untuk memenuhi kebutuhan bisnis. Saya percaya bahwa kode berkualitas tinggi harus berjalan beriringan dengan efisiensi sistem dan kejelasan logis.",
+      "paragraph_3": "Saya memadukan keahlian teknis dengan komunikasi proaktif, berpikir kritis, dan manajemen waktu yang efektif. Saya berkembang dalam lingkungan kolaboratif dan memanfaatkan keterampilan kepemimpinan untuk memastikan setiap proyek memberikan hasil optimal dan dampak nyata.",
+      "paragraph_4": "Salam hangat,"
     },
     "career": {
       "title": "Karier",
@@ -33,57 +35,71 @@
       "title": "Pendidikan",
       "sub_title": "Perjalanan pendidikan saya."
     },
-    "resume_download_button": "Unduh CV",
-    "portfolio_download_button": "Unduh Portofolio"
+    "resume_download_button": "Unduh Resume",
+    "portfolio_download_button": "Unduh Portofolio",
+    "error": "Terjadi kesalahan pada server.",
+    "no_data": "Data tidak tersedia."
+  },
+  "ContentsPage": {
+    "title": "Konten",
+    "description": "Kumpulan konten coding dan karya kreatif saya.",
+    "open_tiktok": "Buka TikTok",
+    "view": "Lihat",
+    "load_more": "Muat Lebih Banyak",
+    "privacy_policy": "Kebijakan Privasi",
+    "error": "Terjadi kesalahan pada server.",
+    "no_data": "Konten tidak tersedia."
   },
   "AchievementsPage": {
     "title": "Pencapaian",
-    "description": "Kumpulan sertifikat dan badge yang saya peroleh sepanjang perjalanan profesional dan akademik.",
+    "description": "Koleksi sertifikat dan lencana yang telah saya raih sepanjang perjalanan profesional dan akademik saya.",
     "error": "Terjadi kesalahan pada server.",
     "no_data": "Data tidak tersedia.",
     "show_credential": "Lihat Kredensial"
   },
   "ProjectsPage": {
     "title": "Proyek",
-    "description": "Pameran proyek pribadi dan open-source yang telah saya buat atau kontribusikan.",
+    "description": "Etalase proyek pribadi maupun sumber terbuka (open-source) yang telah saya bangun atau kontribusikan.",
     "view_project": "Lihat Proyek",
-    "tech_stack": "Teknologi yang Digunakan",
+    "tech_stack": "Teknologi",
     "back_button": "Kembali",
     "source_code_text": "Kode Sumber",
     "live_demo_text": "Demo Langsung",
     "error": "Terjadi kesalahan pada server.",
-    "no_data": "Data tidak tersedia."
+    "no_data": "Proyek tidak tersedia."
   },
   "DashboardPage": {
     "title": "Dasbor",
-    "description": "Dasbor pribadi saya yang dibangun dengan Next.js API routes, memvisualisasikan statistik pengembangan dan kontribusi secara real-time.",
+    "description": "Dasbor pribadi saya yang dibangun dengan rute API Next.js, memvisualisasikan statistik pengembangan dan kontribusi secara real-time.",
     "error": "Terjadi kesalahan pada server.",
+    "no_data": "Statistik tidak tersedia.",
     "umami": {
       "title": "Umami",
-      "sub_title": "Pantau lalu lintas dan interaksi secara real-time dari situs portofolio saya.",
+      "sub_title": "Pantau trafik dan interaksi real-time dari situs portofolio saya.",
       "overview": {
-        "page_views": "Tampilan",
+        "page_views": "Dilihat",
         "visitors": "Pengunjung",
         "visits": "Kunjungan",
         "countries": "Negara",
-        "events": "Peristiwa"
+        "events": "Acara"
       },
       "chart": {
-        "title": "Tren Lalu Lintas",
+        "title": "Tren Trafik",
         "sessions": "Sesi",
         "page_views": "Tampilan Halaman"
       },
-      "filter_placeholder": "Saring domain..."
+      "all": "Semua",
+      "filter_placeholder": "Filter domain..."
     },
     "github": {
       "title": "Kontribusi GitHub",
-      "sub_title": "Aktivitas GitHub saya selama satu tahun terakhir.",
+      "sub_title": "Aktivitas GitHub saya selama setahun terakhir.",
       "title_total_contribution": "Total",
-      "title_total_this_week_contributino": "Minggu ini",
+      "title_total_this_week_contribution": "Minggu ini",
       "title_best_contribution": "Terbaik",
       "title_average_contribution": "Rata-rata",
-      "title_less_contribution": "Paling Sedikit",
-      "title_more_contribution": "Paling Banyak",
+      "title_less_contribution": "Sedikit",
+      "title_more_contribution": "Banyak",
       "unit": "hari"
     },
     "wakatime": {
@@ -99,11 +115,11 @@
       "languages": "Bahasa Teratas"
     },
     "codewars": {
-      "title": "Perkembangan Codewars",
-      "sub_title": "Metri performa dari tantangan Codewars.",
+      "title": "Progres Codewars",
+      "sub_title": "Metrik performa dari tantangan Codewars.",
       "title_rank": "Peringkat",
-      "title_honor": "Honor",
-      "title_completed": "Tantangan Diselesaikan",
+      "title_honor": "Kehormatan",
+      "title_completed": "Tantangan Selesai",
       "title_leaderboard": "Papan Peringkat Global",
       "title_clan": "Klan",
       "title_skills": "Keahlian Terkait"
@@ -112,27 +128,29 @@
       "title": "Statistik Monkeytype",
       "sub_title": "Statistik dan performa mengetik.",
       "joined": "Bergabung",
-      "current_streak": "Rekor Saat Ini",
+      "current_streak": "Streak Saat Ini",
       "unit_days": "hari",
       "title_test_started": "Tes Dimulai",
       "title_test_completed": "Tes Selesai",
       "title_time_typing": "Total Waktu Mengetik",
-      "title_leaderboard": "Papan Peringkat Bahasa Inggris Sepanjang Masa",
+      "title_leaderboard": "Papan Peringkat Bahasa Inggris",
       "unit_seconds": "detik",
       "unit_time": "waktu",
       "unit_words": "kata",
       "top": "teratas",
       "days_ago": "hari yang lalu",
-      "xp_until_next_level": "XP ke Level Selanjutnya",
+      "xp_until_next_level": "XP ke Level Berikutnya",
       "total_xp": "Total XP"
     }
   },
   "ChatRoomPage": {
     "title": "Ruang Obrolan",
-    "description": "Silakan bagikan pendapat, saran, pertanyaan, atau apa pun di sini!",
+    "description": "Jangan ragu untuk berbagi pemikiran, saran, pertanyaan, atau apa pun!",
     "placeholder": "Ketik pesan Anda...",
+    "error": "Terjadi kesalahan pada server.",
+    "no_data": "Belum ada pesan.",
     "sign_in": {
-      "title": "Silakan masuk untuk bergabung dalam percakapan. Tenang, data Anda aman bersama kami.",
+      "title": "Silakan masuk untuk bergabung dalam percakapan. Jangan khawatir, data Anda aman bersama kami.",
       "label": "Masuk dengan",
       "signed_label": "Masuk sebagai",
       "sign_out_label": "Keluar"
@@ -146,12 +164,14 @@
   },
   "ContactPage": {
     "title": "Kontak",
-    "description": "Mari kita terhubung",
+    "description": "Mari saling terhubung.",
+    "error": "Gagal mengirim pesan.",
+    "no_data": "Informasi kontak tidak tersedia.",
     "social_media": {
       "title": "Temukan saya di media sosial",
       "gmail": {
         "title": "Tetap Terhubung",
-        "description": "Hubungi saya via email untuk pertanyaan atau kolaborasi."
+        "description": "Hubungi saya melalui email untuk pertanyaan atau kolaborasi."
       },
       "instagram": {
         "title": "Ikuti Perjalanan Saya",
@@ -159,19 +179,19 @@
       },
       "linkedin": {
         "title": "Mari Terhubung",
-        "description": "Terhubung secara profesional dengan saya."
+        "description": "Terhubung dengan saya secara profesional."
       },
       "tiktok": {
-        "title": "Ikut Seru-seruan",
-        "description": "Tonton konten yang seru dan menarik."
+        "title": "Bergabung dalam Keseruan",
+        "description": "Tonton konten yang menarik dan menyenangkan."
       },
       "github": {
         "title": "Jelajahi Kode",
-        "description": "Lihat karya open-source saya."
+        "description": "Jelajahi karya sumber terbuka saya."
       }
     },
     "form": {
-      "title": "Atau kirim saya pesan",
+      "title": "Atau kirimkan saya pesan",
       "input_name": "Nama",
       "input_email": "Email",
       "input_message": "Pesan",
@@ -180,12 +200,14 @@
   },
   "SmartTalkPage": {
     "title": "Smart Talk",
-    "description": "Ruang berbasis AI untuk percakapan alami, penuh wawasan, dan eksplorasi ide."
+    "description": "Ruang bertenaga AI untuk percakapan alami yang mendalam dan eksplorasi ide.",
+    "error": "AI saat ini tidak tersedia.",
+    "no_data": "Belum ada riwayat percakapan."
   },
   "Footer": {
     "hire": "Rekrut saya.",
     "copyright_1": "HAK CIPTA © ",
-    "copyright_2": "Satria Bahari. Seluruh hak dilindungi."
+    "copyright_2": "Satria Bahari. Seluruh hak cipta dilindungi undang-undang."
   },
   "LocaleSwitcher": {
     "en": "🇺🇸",
@@ -195,6 +217,7 @@
   "Navigation": {
     "Home": "Beranda",
     "About": "Tentang",
+    "Contents": "Konten",
     "Achievements": "Pencapaian",
     "Projects": "Proyek",
     "Dashboard": "Dasbor",
@@ -204,6 +227,6 @@
   },
   "NotFoundPage": {
     "title": "Halaman tidak ditemukan",
-    "button": "Bawa saya ke beranda"
+    "button": "Kembali ke Beranda"
   }
 }

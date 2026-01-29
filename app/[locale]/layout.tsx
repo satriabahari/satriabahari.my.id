@@ -2,10 +2,11 @@ import NextTopLoader from "nextjs-toploader";
 import Script from "next/script";
 import { getServerSession } from "next-auth";
 import { Analytics } from "@vercel/analytics/react";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { getMessages, setRequestLocale } from "next-intl/server";
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 
 import Layouts from "@/common/components/layouts";
 import ThemeProviderContext from "@/common/stores/theme";
@@ -13,6 +14,11 @@ import NextAuthProvider from "@/SessionProvider";
 import { METADATA } from "@/common/constants/metadata";
 import { inter } from "@/common/styles/fonts";
 import SkeletonThemeProvider from "@/SkeletonThemeProvider";
+import { routing } from "@/i18n/routing";
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -36,26 +42,33 @@ export const metadata: Metadata = {
   },
 };
 
+interface RootLayoutProps {
+  children: React.ReactNode;
+  params: { locale: string };
+}
+
 const RootLayout = async ({
   children,
   params: { locale },
-}: Readonly<{
-  children: React.ReactNode;
-  params: { locale: string };
-}>) => {
+}: RootLayoutProps) => {
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
+  setRequestLocale(locale);
+
   const messages = await getMessages();
   const session = await getServerSession();
 
   return (
     <html lang={locale} suppressHydrationWarning={true}>
-      <Script
-        defer
-        src="https://cloud.umami.is/script.js"
-        data-website-id="91c868c5-2a89-4a1d-b292-56c40ea30137"
-
-        // data-domains="satriabahari.site"
-        // data-website-id="8e2c9f27-a12b-48ca-8130-808ebe377aca"
-      ></Script>
+      <head>
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="91c868c5-2a89-4a1d-b292-56c40ea30137"
+        />
+      </head>
       <body className={inter.className}>
         <NextTopLoader
           color="#fbe400"
@@ -68,7 +81,7 @@ const RootLayout = async ({
           speed={200}
           shadow="0 0 10px #fbe400,0 0 5px #ffffb8"
         />
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={messages} locale={locale}>
           <NextAuthProvider session={session}>
             <ThemeProviderContext>
               <SkeletonThemeProvider>
