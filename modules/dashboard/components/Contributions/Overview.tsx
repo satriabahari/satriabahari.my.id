@@ -46,7 +46,7 @@ const Overview = ({ data }: OverviewProps) => {
         value={totalContributions}
       />
       <OverviewItem
-        label={t("title_total_this_week_contributino")}
+        label={t("title_total_this_week_contribution")}
         value={totalThisWeekContribution}
       />
       <OverviewItem

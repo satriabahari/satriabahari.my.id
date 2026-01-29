@@ -12,5 +12,5 @@ export const METADATA = {
     locale: "id-ID",
   },
   exTitle: "| Satria Bahari",
-  profile: "/images/satria-3.jpg",
+  profile: "/images/satria.jpg",
 };

@@ -1,32 +1,34 @@
+"use client";
+
 import React, { useTransition } from "react";
 import { motion } from "framer-motion";
 import { useLocale } from "next-intl";
-
-import { Locale } from "@/config";
-import { setUserLocale } from "@/services/locale";
+import { useRouter, usePathname } from "@/i18n/navigation";
 
 const IntlToggle = () => {
   const currentLocale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
 
   const locales = [
-    { value: "en" as Locale, flag: "🇺🇸" },
-    { value: "id" as Locale, flag: "🇮🇩" },
+    { value: "en", flag: "🇺🇸" },
+    { value: "id", flag: "🇮🇩" },
   ];
-
-  const [isPending, startTransition] = useTransition();
 
   const currentIndex = locales.findIndex(
     (locale) => locale.value === currentLocale,
   );
+
   const buttonWidth = 40;
   const totalWidth = buttonWidth * locales.length;
   const slidePosition = currentIndex * buttonWidth;
 
-  const handleLocaleChange = (locale: Locale) => {
-    if (locale === currentLocale || isPending) return;
+  const handleLocaleChange = (nextLocale: string) => {
+    if (nextLocale === currentLocale || isPending) return;
 
     startTransition(() => {
-      setUserLocale(locale);
+      router.replace(pathname, { locale: nextLocale });
     });
   };
 

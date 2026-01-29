@@ -6,12 +6,14 @@ import { LuChevronsUpDown as ArrowIcon } from "react-icons/lu";
 import { TiTick as ActiveIcon } from "react-icons/ti";
 import { MdArrowOutward as LinkIcon } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 import cn from "@/common/libs/clsxm";
 import Button from "@/common/components/elements/Button";
 import { UMAMI_ACCOUNT } from "@/common/constants/umami";
 
 const ComboBoxFilter = () => {
+  const t = useTranslations("DashboardPage.umami");
   const router = useRouter();
   const searchParams = useSearchParams();
   const domainParams = searchParams.get("domain") || "all";
@@ -45,7 +47,7 @@ const ComboBoxFilter = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const displayLabel = selectValue === "all" ? "All" : selectValue;
+  const displayLabel = selectValue === "all" ? t("all") : selectValue;
 
   return (
     <div ref={comboBoxRef} className="relative w-full md:w-[230px]">
@@ -75,7 +77,7 @@ const ComboBoxFilter = () => {
                 <div className="w-4">
                   {selectValue === "all" && <ActiveIcon size={16} />}
                 </div>
-                <span>All</span>
+                <span>{t("all")}</span>
               </button>
 
               <div className="my-1 h-[1px] bg-neutral-200 dark:bg-neutral-800" />

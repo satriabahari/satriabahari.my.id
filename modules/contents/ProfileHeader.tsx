@@ -1,7 +1,8 @@
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+
 import Image from "@/common/components/elements/Image";
 import { ProfileItem } from "@/common/types/tiktok";
-import { motion } from "framer-motion";
-import Link from "next/link";
 
 function StatItem({ count, label }: { count: number; label: string }) {
   const format = (num: number) => {
@@ -33,12 +34,14 @@ export default function ProfileHeader({
   likes_count,
   video_count,
 }: ProfileItem) {
+  const t = useTranslations("ContentsPage");
+
   return (
     <div className="flex flex-col gap-4 md:flex-row">
       <div className="flex flex-col items-center justify-center gap-6 md:flex-row ">
         <Image
           src={avatar_large_url}
-          className="rounded-full "
+          className="rounded-full"
           alt="Profile"
           width={200}
           height={200}
@@ -73,16 +76,16 @@ export default function ProfileHeader({
             target="_blank"
             className="rounded-lg bg-primary px-5 py-2 text-sm font-bold text-dark transition-all duration-300 hover:scale-105"
           >
-            Open TikTok
+            {t("open_tiktok")}
           </Link>
           <button className="text-[10px] text-neutral-600 dark:text-neutral-400">
-            View{" "}
+            {t("view")}{" "}
             <Link
               href="https://www.tiktok.com/legal/page/row/privacy-policy/"
               target="_blank"
               className="underline transition duration-300 hover:text-dark dark:hover:text-light"
             >
-              Privacy Policy
+              {t("privacy_policy")}
             </Link>
           </button>
         </div>

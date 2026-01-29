@@ -10,7 +10,6 @@ import ProjectCard from "./ProjectCard";
 import EmptyState from "@/common/components/elements/EmptyState";
 import { fetcher } from "@/services/fetcher";
 import { ProjectItem } from "@/common/types/projects";
-import Card from "@/common/components/elements/Card";
 
 const Projects = () => {
   const { data, isLoading, error } = useSWR("/api/projects", fetcher);

@@ -113,13 +113,15 @@ export const ChatRoom = ({ isWidget = false }: { isWidget?: boolean }) => {
     };
   }, [supabase]);
 
+  const filteredMessages = messages.filter((msg) => msg.is_show === true);
+
   return (
     <>
       {isLoading ? (
         <ChatItemSkeleton />
       ) : (
         <ChatList
-          messages={messages}
+          messages={filteredMessages}
           onDeleteMessage={handleDeleteMessage}
           onClickReply={handleClickReply}
           isWidget={isWidget}

@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 const Introduction = () => {
   const t = useTranslations("HomePage");
 
-  const paragrafData = [{ index: 1 }, { index: 2 }];
+  const paragraphData = [{ index: 1 }, { index: 2 }];
 
   return (
     <section className="space-y-2 bg-cover bg-no-repeat">
@@ -17,9 +17,9 @@ const Introduction = () => {
           <li>{t("location_type")}</li>
         </ul>
         <div className="mt-6 space-y-4 leading-7 text-neutral-600 dark:text-neutral-300">
-          {paragrafData.map((paragraph) => (
+          {paragraphData.map((paragraph) => (
             <div key={paragraph.index}>
-              {t(`resume.paragraf_${paragraph.index}`)}
+              {t(`resume.paragraph_${paragraph.index}`)}
             </div>
           ))}
         </div>
